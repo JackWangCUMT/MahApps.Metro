@@ -980,6 +980,12 @@ namespace MahApps.Metro.Controls
             var windowHandle = new WindowInteropHelper(window).Handle;
             var cursorPos = Standard.NativeMethods.GetCursorPos();
 
+            // Test 1
+            //UnsafeNativeMethods.ReleaseCapture();
+
+            // Test 2/3
+            UnsafeNativeMethods.ReleaseCapture();
+
             // if the window is maximized dragging is only allowed on title bar (also if not visible)
             var windowIsMaximized = window.WindowState == WindowState.Maximized;
             var isMouseOnTitlebar = Mouse.GetPosition(window.windowTitleThumb).Y <= window.TitlebarHeight && window.TitlebarHeight > 0;
@@ -994,7 +1000,10 @@ namespace MahApps.Metro.Controls
                 window.Left = Math.Max(cursorPos.x - window.RestoreBounds.Width / 2, 0);
             }
             var lParam = (int)(uint)cursorPos.x | (cursorPos.y << 16);
-            Standard.NativeMethods.SendMessage(windowHandle, Standard.WM.LBUTTONUP, (IntPtr)Standard.HT.CAPTION, (IntPtr)lParam);
+            // Test 3 ohne
+            // Test 2
+            //Standard.NativeMethods.SendMessage(windowHandle, Standard.WM.NCLBUTTONUP, (IntPtr)Standard.HT.CAPTION, (IntPtr)lParam);
+            //Standard.NativeMethods.SendMessage(windowHandle, Standard.WM.LBUTTONUP, (IntPtr)Standard.HT.CAPTION, (IntPtr)lParam);
             Standard.NativeMethods.SendMessage(windowHandle, Standard.WM.SYSCOMMAND, (IntPtr)Standard.SC.MOUSEMOVE, IntPtr.Zero);
         }
 
